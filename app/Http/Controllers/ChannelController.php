@@ -1,27 +1,30 @@
 <?php
 
 namespace App\Http\Controllers;
-
-use App\Video;
+use App\Channel;
 use App\API\ApiHelper;
 use App\Repositories\Repository;
 use Illuminate\Http\Request;
 
-class VideoController extends Controller
+class ChannelController extends Controller
 {
     use ApiHelper;
-
+    
     /**
-    * @var Repository
-    */
+     * @var Repository
+     */
     protected $model;
 
-    public function __construct(Video $video)
+    /**
+     * ChannelController constructor.
+     *
+     * @param Channel $channel
+     */
+    public function __construct(Channel $channel)
     {
-        $this->model = new Repository($video);
-
-        // Protect all routes except reading
-        $this->middleware('auth:api', ['except' => ['index', 'show']]);
+        $this->model = new Repository( $channel );
+        // Protect all except reading
+        $this->middleware('auth:api', ['except' => ['index', 'show'] ]);
     }
 
     /**
@@ -42,16 +45,10 @@ class VideoController extends Controller
      */
     public function store(Request $request)
     {
+        // run the validation
         $this->beforeCreate($request);
-
-        if(!$request->user()->channels()->find($request->get('channel_id', 0)))
-        {
-            return $this->errorForbidden('You can only add video to your own channels');
-        }
-
-        return $request->user()->videos()->create(
-            $request->only($this->model->getModel()->fillable)
-        );
+        return $request->user()->channels()
+            ->create( $request->only($this->model->getModel()->fillable));
     }
 
     /**
@@ -75,28 +72,29 @@ class VideoController extends Controller
     public function update(Request $request, $id)
     {
         $this->beforeUpdate($request);
-
-        if(!$this->model->update($request->only($this->model->getModel()->fillable), $id))
-        {
+        // validate the channel id belongs to user
+        if( ! $request->user()->channels()->find($id) ) {
+            return $this->errorForbidden('You can only edit your channel.');
+        }
+        if (! $this->model->update($request->only($this->model->getModel()->fillable), $id) ) {
             return $this->errorBadRequest('Unable to update.');
         }
-
         return $this->model->find($id);
     }
 
     /**
      * Remove the specified resource from storage.
      *
-     * @param  int  $id
+     * @param  int $id
+     * @param Request $request
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
+    public function destroy($id, Request $request)
     {
-        if(!$request->user()->videos()->find($id))
-        {
-            return $this->errorNotFound('Video not found.');
+        // run before delete checks
+        if (! $request->user()->channels()->find($id)) {
+            return $this->errorNotFound('Channel not found.');
         }
-
         return $this->model->delete($id) ? $this->noContent() : $this->errorBadRequest();
     }
 }

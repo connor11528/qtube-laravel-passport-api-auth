@@ -29,6 +29,10 @@ Laravel is a badass PHP web development framework. If you're learning to code, l
 
 Create a fresh Laravel application and install passport via composer. You'll have to run migrations and `php artisan passport:install`. There are also some files to modify in order to configure the server. These steps are outlined in the documentation and about every single Laravel Passport tutorial on the internet so I will not recite them here. You can find the code changes for setting up Passport within [this commit](https://github.com/connor11528/authenticated-api-with-laravel-5/commit/ad6151eb71bdc99da88f7e96e8856c9fef2a35e0).
 
+## How do I create a MySQL database?
+
+The easiest way is to [create the database using Sequel Pro](https://research.bowdoin.edu/digital-computational-studies/student-research/sql/sequel-pro-creating-a-database/). Make sure you've installed MySQL and Sequel Pro first. After you've created your database add the connection info to your **.env** file. This can be tricky at first but with practice it gets easier!
+
 ## What is Middleware? 
 
 We can use Passport from our controller by invoking Middleware. Middleware is a way to filter requests that are incoming to your application. It is not specific to Laravel, nearly every web development framework in 2018 has some concept of middleware for HTTP requests. Middleware gets executed before the controller method; it sits in the middle between the user making a request and the logic to execute that request. 
