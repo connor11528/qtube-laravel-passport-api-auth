@@ -108,4 +108,18 @@ Passport includes an authentication gaurd that will validate access tokens for i
 
 Laravel provides helpful comments for all configuration options.
 
+## Repositories
 
+- [Repositories Simplified](https://laracasts.com/lessons/repositories-simplified)
+
+- [Repositories and Inheritance](https://laracasts.com/lessons/repositories-and-inheritance)
+
+- [The Repository Trap, and Other Ramblings](https://laracasts.com/lessons/the-repository-trap-and-other-ramblings)
+
+## Service Provider
+
+- [Service Providers Decoded](https://laracasts.com/lessons/service-providers-decoded)
+
+- [Laravel 5.4 From Scratch: The Service Container](https://laracasts.com/series/laravel-from-scratch-2017/episodes/24)
+
+- [Laravel 5.4 From Scratch: Service Providers Explained](https://laracasts.com/series/laravel-from-scratch-2017/episodes/25)
